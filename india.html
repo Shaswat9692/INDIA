@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive India Map</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+        }
+        .map-container {
+            position: relative;
+            display: inline-block;
+        }
+        .map-container img {
+            width: 100%;
+            height: auto;
+            max-width: 1200px;
+        }
+        .dot {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-image: url('Image/location.png');
+            background-size: cover;
+            cursor: pointer;
+        }
+        /* Example positions for a few states */
+#dot-andaman_nicobar { top: 90%; left: 85.65%; }
+#dot-andhra_pradesh { top: 69.54%; left: 36.03%; }
+#dot-arunachal_pradesh { top: 28.90%; left: 83.49%; }
+#dot-assam { top: 36.91%; left: 82.20%; }
+#dot-bihar { top: 35.83%; left: 60.03%; }
+#dot-chhattisgarh { top: 54.55%; left: 45.93%; }
+#dot-goa { top: 68.83%; left: 18.20%; }
+#dot-gujarat { top: 44.10%; left: 10.68%; }
+#dot-haryana { top: 28.37%; left: 27.35%; }
+#dot-himachal_pradesh { top: 16.0%; left: 30.51%; }
+#dot-jharkhand { top: 46.38%; left: 57.87%; }
+#dot-karnataka { top: 70.1%; left: 23.82%; }
+#dot-kerala { top: 87.57%; left: 27.82%; }
+#dot-madhya_pradesh { top: 42.56%; left: 40.51%; }
+#dot-maharashtra { top: 55.09%; left: 23.88%; }
+#dot-manipur { top: 39.28%; left: 85.33%; }
+#dot-meghalaya { top: 35.65%; left: 77.55%; }
+#dot-mizoram { top: 43.38%; left: 82.85%; }
+#dot-nagaland { top: 34.01%; left: 87.65%; }
+#dot-odisha { top: 51.60%; left: 56.35%; }
+#dot-punjab { top: 19.45%; left: 25.56%; }
+#dot-rajasthan { top: 32.73%; left: 23.15%; }
+#dot-sikkim { top: 31.27%; left: 67.44%; }
+#dot-tamil_nadu { top: 81.54%; left: 35.24%; }
+#dot-telangana { top: 64.31%; left: 34.75%; }
+#dot-tripura { top: 41.83%; left: 78.7%; }
+#dot-uttar_pradesh { top: 36.13%; left: 43.45%; }
+#dot-uttarakhand { top: 26.1%; left: 38.40%; }
+#dot-west_bengal { top: 42.46%; left: 67.29%; }
+#dot-delhi { top: 26.91%; left: 30.67%; }
+#dot-jammu_kashmir { top: 11%; left: 20.90%; }
+#dot-ladakh { top: 6.90%; left: 27.51%; }
+#dot-puducherry { top: 81.48%; left: 24.20%; }
+#dot-chandigarh { top: 21.80%; left: 30.20%; }
+#dot-dadra_nagar_haveli { top: 54.21%; left: 15.69%; }
+#dot-lakshadweep { top: 86.1%; left: 13.89%; }
+
+@media (max-width: 430px) {
+    [id^="dot-"] {
+        transform: scale(0.6);
+    }
+}
+
+
+        /* Add positions for all other states similarly */
+    </style>
+</head>
+<body>
+    <h1>Explore India's States</h1>
+    <div class="map-container">
+        <img src="Image/Update India Map.png" alt="Map of India">
+        <div id="dot-andaman_nicobar" class="dot" onclick="openState('andaman_nicobar')"></div>
+<div id="dot-andhra_pradesh" class="dot" onclick="openState('andhra_pradesh')"></div>
+<div id="dot-arunachal_pradesh" class="dot" onclick="openState('arunachal_pradesh')"></div>
+<div id="dot-assam" class="dot" onclick="openState('assam')"></div>
+<div id="dot-bihar" class="dot" onclick="openState('bihar')"></div>
+<div id="dot-chhattisgarh" class="dot" onclick="openState('chhattisgarh')"></div>
+<div id="dot-goa" class="dot" onclick="openState('goa')"></div>
+<div id="dot-gujarat" class="dot" onclick="openState('gujarat')"></div>
+<div id="dot-haryana" class="dot" onclick="openState('haryana')"></div>
+<div id="dot-himachal_pradesh" class="dot" onclick="openState('himachal_pradesh')"></div>
+<div id="dot-jharkhand" class="dot" onclick="openState('jharkhand')"></div>
+<div id="dot-karnataka" class="dot" onclick="openState('karnataka')"></div>
+<div id="dot-kerala" class="dot" onclick="openState('kerala')"></div>
+<div id="dot-madhya_pradesh" class="dot" onclick="openState('madhya_pradesh')"></div>
+<div id="dot-maharashtra" class="dot" onclick="openState('maharashtra')"></div>
+<div id="dot-manipur" class="dot" onclick="openState('manipur')"></div>
+<div id="dot-meghalaya" class="dot" onclick="openState('meghalaya')"></div>
+<div id="dot-mizoram" class="dot" onclick="openState('mizoram')"></div>
+<div id="dot-nagaland" class="dot" onclick="openState('nagaland')"></div>
+<div id="dot-odisha" class="dot" onclick="openState('ODISHA/odisha')"></div>
+<div id="dot-punjab" class="dot" onclick="openState('punjab')"></div>
+<div id="dot-rajasthan" class="dot" onclick="openState('rajasthan')"></div>
+<div id="dot-sikkim" class="dot" onclick="openState('sikkim')"></div>
+<div id="dot-tamil_nadu" class="dot" onclick="openState('tamil_nadu')"></div>
+<div id="dot-telangana" class="dot" onclick="openState('telangana')"></div>
+<div id="dot-tripura" class="dot" onclick="openState('tripura')"></div>
+<div id="dot-uttar_pradesh" class="dot" onclick="openState('uttar_pradesh')"></div>
+<div id="dot-uttarakhand" class="dot" onclick="openState('uttarakhand')"></div>
+<div id="dot-west_bengal" class="dot" onclick="openState('west_bengal')"></div>
+<div id="dot-delhi" class="dot" onclick="openState('delhi')"></div>
+<div id="dot-jammu_kashmir" class="dot" onclick="openState('jammu_kashmir')"></div>
+<div id="dot-ladakh" class="dot" onclick="openState('ladakh')"></div>
+<div id="dot-puducherry" class="dot" onclick="openState('puducherry')"></div>
+<div id="dot-chandigarh" class="dot" onclick="openState('chandigarh')"></div>
+<div id="dot-dadra_nagar_haveli" class="dot" onclick="openState('dadra_nagar_haveli')"></div>
+<div id="dot-lakshadweep" class="dot" onclick="openState('lakshadweep')"></div>
+
+        <!-- Add dots for all other states similarly -->
+    </div>
+
+    <script>
+        function openState(state) {
+            window.location.href = state + '.html';
+        }
+    </script>
+</body>
+</html>

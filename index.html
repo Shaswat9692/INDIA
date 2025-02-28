@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Welcome - Choose Your Avatar</title>
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            color: white;
+            background-image: url("https://static.vecteezy.com/system/resources/thumbnails/047/523/047/small_2x/devotional-background-with-bells-and-mandala-video.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Navigation bar */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #007BFF;
+            padding: 10px 20px;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-container img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .logo-container span {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .nav-links {
+            display: flex;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 4px 15px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+        }
+
+        /* Centering the login box */
+        .container {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            width: 350px;
+            margin: auto;
+            margin-top: 150px;
+            backdrop-filter: blur(10px);
+        }
+        
+        input, button {
+            width: 80%;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+        }
+
+        button {
+            background: #ff6f61;
+            color: white;
+            cursor: pointer;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .avatars {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .avatars img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid white;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <div class="logo-container">
+            <img src="your-logo.png" alt="App Logo"> <!-- Change this to your actual logo file -->
+            <span>Your App Name</span>
+        </div>
+        <div class="nav-links">
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </div>
+
+    <div id="google_translate_element" style="margin-top: 80px;"></div>
+
+    <div id="login-box" class="container">
+        <h2>Enter Your Details</h2>
+        <input type="text" id="name" placeholder="Enter your name" required>
+        <input type="number" id="age" placeholder="Enter your age" required>
+        <button onclick="nextStep()">Next</button>
+    </div>
+
+    <div id="avatar-box" class="container hidden">
+        <h2>Choose Your Avatar</h2>
+        <div class="avatars">
+            <img src="https://img.freepik.com/premium-photo/senior-man-avatar-smiling-elderly-man-with-beard-with-gray-hair-3d-vector-people-character-illustration_1029476-293410.jpg" id="male" onclick="selectAvatar('Mr.')">
+            <img src="https://img.freepik.com/premium-photo/60-year-old-woman-3d-cartoon-character-avatar_16109-3905.jpg" id="female" onclick="selectAvatar('Mrs.')">
+        </div>
+        <button onclick="showInstructions()">Next</button>
+    </div>
+
+    <div id="instructions-box" class="container hidden">
+        <h2 id="greeting"></h2>
+        <p id="infoText">Instagram[a] is an American photo and video sharing social networking service owned by Meta Platforms.</p>
+        <button onclick="speakText()">🎙 Listen</button>
+        <br><br>
+        <button onclick="startGame()" style="background-color: green;">👉Click Here to Start👈</button>
+    </div>
+
+    <script>
+        let userName = "";
+        let userTitle = "";
+
+        function nextStep() {
+            userName = document.getElementById("name").value;
+            let age = document.getElementById("age").value;
+
+            if (userName === "" || age === "") {
+                alert("Please enter both name and age.");
+                return;
+            }
+
+            document.getElementById("login-box").classList.add("hidden");
+            document.getElementById("avatar-box").classList.remove("hidden");
+        }
+
+        function selectAvatar(title) {
+            userTitle = title;
+            document.getElementById("avatar-box").classList.add("hidden");
+            document.getElementById("instructions-box").classList.remove("hidden");
+            document.getElementById("greeting").innerText = `Welcome, ${userTitle} ${userName}!`;
+        }
+
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({ pageLanguage: 'en' }, 'google_translate_element');
+
+            setTimeout(() => {
+                let savedLang = localStorage.getItem('selectedLang');
+                if (savedLang) {
+                    let select = document.querySelector('.goog-te-combo');
+                    if (select) {
+                        select.value = savedLang;
+                        select.dispatchEvent(new Event('change'));
+                    }
+                }
+            }, 1000);
+        }
+
+        document.addEventListener("change", function (event) {
+            if (event.target.classList.contains("goog-te-combo")) {
+                localStorage.setItem("selectedLang", event.target.value);
+            }
+        });
+
+        function speakText() {
+            let text = document.getElementById("infoText").innerText;
+            let lang = localStorage.getItem("selectedLang") || "en";
+
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = lang;
+            speechSynthesis.speak(utterance);
+        }
+
+        function startGame() {
+            window.location.href = "india.html";
+        }
+    </script>
+
+</body>
+</html>
