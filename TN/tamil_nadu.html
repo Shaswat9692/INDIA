@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Odisha</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+        }
+        .video-container {
+            margin-top: 20px;
+        }
+        .places-list {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .places-list h2 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+        select {
+            font-size: 18px;
+            padding: 10px;
+            width: 250px;
+            border-radius: 5px;
+            border: 2px solid #333;
+            background-color: white;
+            cursor: pointer;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Tamil Nadu</h1>
+    <div class="video-container">
+        <div style="position: relative; width: 100%; padding-top: 56.25%;">
+            <iframe 
+                src="https://www.youtube.com/embed/QqpMmDDEekY?si=1l6TJaGIMhAAa5is"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+            </iframe>
+        </div>
+    </div>
+    
+    <div class="places-list">
+        <h2>Famous Places in Tamil Nadu &#9660;</h2>
+        <select id="places-dropdown" onchange="openPlacePage()">
+            <option disabled selected>Select a place</option>
+            <option value="MARINA/marina.html">Marina Beach </option>
+            <option value="KAPALEESHWARAR/kapaleeshwarar.html">Kapaleeshwarar Temple </option>
+            <option value="THEOSOPHICAL/theosophical.html">Theosophical Society</option>
+            <option value="SEMMOZHI/semmozhi.html">Semmozhi Poonga</option>
+            <option value="ELLIOT/elliot.html">Elliot’s Beach </option>
+            <option value="DAKSHINA/dakshina.html">Dakshina Chitra </option>
+            <option value="OOTY/ooty.html">Ooty</option>
+            <option value="KODAIKANAL/kodaikanal.html">Kodaikanal </option>
+            <option value="KANYAKUMARI/kanyakumari.html"> Kanyakumari</option>
+            <option value="RAMESHWARAM/rameshwaram.html">Rameshwaram</option>
+        </select>
+    </div>
+
+    <script>
+        function openPlacePage() {
+            var select = document.getElementById("places-dropdown");
+            var selectedValue = select.value;
+            if (selectedValue) {
+                window.location.href = selectedValue;
+            }
+        }
+    </script>
+</body>
+</html>
