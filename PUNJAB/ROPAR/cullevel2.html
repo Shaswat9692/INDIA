@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and Drop Food Game</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background: url('https://t4.ftcdn.net/jpg/04/43/37/07/360_F_443370711_sqHRnSIQovW6uyQ5ZwDpd4kjCG8Q6swm.jpg') no-repeat center/cover;
+            background-size: cover;
+            height: 100vh; /* Ensure the body takes full viewport height */
+            margin: 0;
+            padding: 0;
+        }
+        h2, #food-name { color: white; }
+        .food-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; padding: 10px; }
+        .food { width: 25vw; max-width: 160px; cursor: grab; border-radius: 10px; object-fit: cover; }
+        .plate-container { display: flex; flex-direction: column; align-items: center; margin-top: 30px; }
+        #food-name { font-size: 1.4rem; font-weight: bold; margin: 10px 0; }
+
+        .plate {
+    width: 90vw; /* Increased the width */
+    max-width: 800px; /* Increased the max-width */
+    height: 60vw; /* Adjusted the height to maintain aspect ratio */
+    max-height: 500px; /* Increased the max-height */
+    background: url('../Odisha\ Map.png') no-repeat center/contain; /* Ensure the map fits within the plate */
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    position: relative; 
+    margin-top: 20px;
+}
+
+
+
+        .message { font-size: 1rem; margin-top: 10px; }
+        .hidden { display: none; }
+        .correct { color: green; font-weight: bold; }
+        .wrong { color: red; font-weight: bold; }
+        #completionScreen {
+            display: none; flex-direction: column; align-items: center; justify-content: center;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0); /* Removed dark overlay */
+            color: white; text-align: center; z-index: 1000;
+        }
+        #completionScreen h1 { font-size: 36px; font-weight: bold; color: #ff6600; text-shadow: 2px 2px 8px rgba(0,0,0,0.2); }
+        button { font-size: 20px; padding: 10px 20px; background: #ed8004; color: white; border: none; border-radius: 5px; cursor: pointer; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+    <h2 class="game-text">Drag the correct Culture to the map</h2>
+    <div class="food-container">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfHHlGc-M93xcM_IhyHauz8WGyB3bR4ZLqgA&s" id="Rasogola" class="food" draggable="true">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNjvm_XKnoctgqhwChwkQB3meG2AqzRvpEuA&s" id="raggi-mudde" class="food" draggable="true">
+        <img src="https://i0.wp.com/www.desiakoraput.com/wp-content/uploads/2023/08/Dhanu-Yatra-Festival.jpg?fit=800%2C400&ssl=1" id="Mysore Pak" class="food" draggable="true">
+        <img src="https://odiafresh.com/folderthumb/Kumar-Purnima-Song.jpg" id="pakhala" class="food" draggable="true">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN1SJNw3BRq5wNqAHut9U7Ye8duFTf4o3NFA&s" id="Puliogire" class="food" draggable="true">
+    </div>
+    
+    <div class="plate-container game-text" id="plateContainer">
+        <p id="food-name"></p>
+        <div class="plate" id="plate"></div>
+    </div>
+    
+    <p class="message game-text" id="message"></p>
+
+    <div id="completionScreen">
+        <h1>🎉 Congratulations! 🎉 <br> You successfully completed Level 2!</h1>
+        <img src="https://media.giphy.com/media/26AHONQ79FdWZhAI0/giphy.gif" width="200px">
+        <br>
+        <button onclick="goToLevel3()">Go to Level 3 →</button>
+    </div>
+
+    <script>
+    let foods = document.querySelectorAll('.food');
+let plate = document.getElementById('plate');
+let message = document.getElementById('message');
+let foodNameText = document.getElementById('food-name');
+
+let foodList = [
+    { name: "Kumar Purnima", id: "pakhala" },
+    { name: "Bali Jatra", id: "raggi-mudde" },
+    { name: "Pana Sankranti", id: "Rasogola" },
+    { name: "Dola Melana", id: "Puliogire" },
+    { name: "Dhanu Jatra", id: "Mysore Pak" }
+];
+
+foodList = foodList.sort(() => Math.random() - 0.5);
+let currentIndex = 0;
+showNextFood();
+
+function showNextFood() {
+    if (currentIndex < foodList.length) {
+        foodNameText.innerText = "Place: " + foodList[currentIndex].name;
+        message.innerText = "";
+    } else {
+        completeLevel2();
+    }
+}
+
+// Function for desktop drag-and-drop
+foods.forEach(food => {
+    food.addEventListener('dragstart', (e) => {
+        e.dataTransfer.setData('text', e.target.id);
+    });
+});
+
+plate.addEventListener('dragover', (e) => e.preventDefault());
+
+plate.addEventListener('drop', (e) => {
+    e.preventDefault();
+    let foodId = e.dataTransfer.getData('text');
+    checkFoodPlacement(foodId);
+});
+
+// **Mobile Touch Support**
+foods.forEach(food => {
+    food.addEventListener('touchstart', touchStart);
+    food.addEventListener('touchmove', touchMove);
+    food.addEventListener('touchend', touchEnd);
+});
+
+let draggedFood = null;
+
+function touchStart(e) {
+    draggedFood = e.target;
+}
+
+function touchMove(e) {
+    if (!draggedFood) return;
+    
+    let touch = e.touches[0];
+    draggedFood.style.position = 'absolute';
+    draggedFood.style.left = touch.clientX - (draggedFood.clientWidth / 2) + 'px';
+    draggedFood.style.top = touch.clientY - (draggedFood.clientHeight / 2) + 'px';
+}
+
+function touchEnd(e) {
+    if (!draggedFood) return;
+
+    let plateRect = plate.getBoundingClientRect();
+    let foodRect = draggedFood.getBoundingClientRect();
+
+    // Check if food is dropped inside the plate area
+    if (
+        foodRect.left > plateRect.left &&
+        foodRect.right < plateRect.right &&
+        foodRect.top > plateRect.top &&
+        foodRect.bottom < plateRect.bottom
+    ) {
+        checkFoodPlacement(draggedFood.id);
+    }
+
+    draggedFood.style.position = 'static';
+    draggedFood = null;
+}
+
+function checkFoodPlacement(foodId) {
+    if (foodId === foodList[currentIndex].id) {
+        let correctFood = document.getElementById(foodId);
+
+        // Remove previous food if any
+        while (plate.firstChild) {
+            plate.removeChild(plate.firstChild);
+        }
+
+        correctFood.style.pointerEvents = "none"; // Prevent further dragging
+        plate.appendChild(correctFood);
+        correctFood.style.position = "absolute";
+        correctFood.style.width = "15vw";
+        correctFood.style.maxWidth = "100px";
+        message.innerHTML = "✅ Correct!";
+        message.className = "message correct";
+        currentIndex++;
+        setTimeout(showNextFood, 1000);
+    } else {
+        message.innerHTML = "❌ Wrong! Try Again!";
+        message.className = "message wrong";
+    }
+}
+
+
+function completeLevel2() {
+    let gameElements = document.querySelectorAll('.game-text, .message');
+    gameElements.forEach(el => el.classList.add('hidden'));
+    document.getElementById("completionScreen").style.display = "flex";
+}
+
+function goToLevel3() {
+    window.location.href = "cullevel3.html";
+}
+
+
+    </script>
+
+</body>
+</html>
