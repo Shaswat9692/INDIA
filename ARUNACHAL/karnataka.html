@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karnataka</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+        }
+        .video-container {
+            margin-top: 20px;
+        }
+        .places-list {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .places-list h2 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+        select {
+            font-size: 18px;
+            padding: 10px;
+            width: 250px;
+            border-radius: 5px;
+            border: 2px solid #333;
+            background-color: white;
+            cursor: pointer;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Karnataka</h1>
+    <div class="video-container">
+        <div style="position: relative; width: 100%; padding-top: 56.25%;">
+            <iframe 
+                src="https://www.youtube.com/embed/pSrmZkBClE4?si=Bym8jgnkZ98ebgIm"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+            </iframe>
+        </div>
+    </div>
+    
+    <div class="places-list">
+        <h2>Famous Places in Karnataka &#9660;</h2>
+        <select id="places-dropdown" onchange="openPlacePage()">
+            <option disabled selected>Select a place</option>
+            <option value="MYSORE/mysore.html">Mysore</option>
+            <option value="COORG/coorg.html">Coorg</option>
+            <option value="HAMPI/hampi.html">Hampi</option>
+            <option value="GOKARNA/gokarna.html">Gokarna</option>
+            <option value="KABINI/kabini.html">Kabini</option>
+            <option value="BELUR/belur.html">Belur & Halebid </option>
+            <option value="UDUPI/udupi.html">Udupi</option>
+            <option value="SAKLESHPUR/sakleshpur.html">Sakleshpur</option>
+            <option value="NANDI/nandi.html">Nandi Hills</option>
+            <option value="BADAMI/badami.html">Badami</option>
+        </select>
+    </div>
+
+    <script>
+        function openPlacePage() {
+            var select = document.getElementById("places-dropdown");
+            var selectedValue = select.value;
+            if (selectedValue) {
+                window.location.href = selectedValue;
+            }
+        }
+    </script>
+</body>
+</html>
