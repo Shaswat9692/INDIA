@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <title>Level 3 - Connect the Food</title>
+    <style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTz00xuRlhdNwN50wq4BAfVyXYwhOuCKhmGg&s');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+    margin-top: 50px;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.item {
+    padding: 12px;
+    background-color: lightblue;
+    border-radius: 5px;
+    cursor: grab;
+    font-size: 18px;
+    font-weight: bold;
+    width: 147px;
+    text-align: center;
+    border: 2px solid #000;
+    margin-bottom: 12px;
+    transition: transform 0.2s ease;
+    margin-left: 10%;
+}
+
+.image-box {
+    width: 110px;
+    height: 55px;
+    background-size: cover;
+    background-position: center;
+    border: 2px solid #000;
+    border-radius: 10px;
+    position: relative;
+    margin-bottom: -19px;
+    margin-top: -10px;
+    margin-left: -13%;
+}
+
+.drop-box {
+    width: 110px;
+    height: 30px;
+    background-color: white;
+    border: 2px solid black;
+    text-align: center;
+    line-height: 30px;
+    font-weight: bold;
+    margin-top: 0px;
+    font-size: 10px;
+    margin-left: -13%;
+}
+
+#result {
+    font-size: 20px;
+    margin-top: 20px;
+    font-weight: bold;
+    padding: 20px;
+}
+
+#columnA {
+    margin-top: 40px;
+}
+
+.success-message {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    display: inline-block;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.hidden {
+    display: none;
+}
+
+
+
+
+    </style>
+</head>
+<body>
+    <div style="color: white;" id="header">
+        <h1>Level 3: Match the culture Name to Its Image</h1>
+        <p>Drag the correct culture name and place it under the matching image.</p>
+    </div>
+    
+    <div class="container" id="gameContainer">
+        <div class="column" id="columnA">
+            <div class="item" draggable="true" id="food4" data-match="img4">Raja</div>
+            <div class="item" draggable="true" id="food2" data-match="img2">Balukakruti</div>
+            <div class="item" draggable="true" id="food3" data-match="img3">Konark Chakra</div>
+            <div class="item" draggable="true" id="food1" data-match="img1">Ratha Jatra</div>
+            <div class="item" draggable="true" id="food5" data-match="img5">Kartika Purnima</div>
+        </div>
+        <div class="column" id="columnB">
+            <div class="image-box" id="img1" style="background-image: url('https://www.ritiriwaz.com/wp-content/uploads/2018/06/Puri.jpg');"></div>
+            <div class="drop-box" id="drop1">Place the correct text</div>
+            
+            <div class="image-box" id="img2" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQa15PN6OugiYSg3vNVGuooI2tX0u8ccU_CoVkzZSTwIFdgX7Ou8U8tu5zSUpBnvK67wko&usqp=CAU');"></div>
+            <div class="drop-box" id="drop2">Place the correct text</div>
+            
+            <div class="image-box" id="img3" style="background-image: url('https://www.holidify.com/images/cmsuploads/compressed/8470388719_d710f2bc71_b_20170826124931.jpg');"></div>
+            <div class="drop-box" id="drop3">Place the correct text</div>
+            
+            <div class="image-box" id="img4" style="background-image: url('https://studyinsta.com/wp-content/uploads/2024/06/Raja-Festival-The-Most-Popular-Fiesta-of-Odisha.webp');"></div>
+            <div class="drop-box" id="drop4">Place the correct text</div>
+            
+            <div class="image-box" id="img5" style="background-image: url('https://culinaryxpress.com/wp-content/uploads/2014/11/bali-yatra-remembering-odishas-glorious-maritime-glory.1024x1024-4.jpg');"></div>
+            <div class="drop-box" id="drop5">Place the correct text</div>
+        </div>
+    </div>
+    <div id="result"></div>
+
+    <script>
+       document.querySelectorAll(".item").forEach(item => {
+    item.addEventListener("dragstart", (e) => {
+        e.dataTransfer.setData("text", e.target.id);
+    });
+
+    // Touch drag for mobile
+    item.addEventListener("touchstart", (e) => {
+        e.preventDefault();
+        let touch = e.touches[0];
+        let draggedItem = e.target;
+
+        draggedItem.style.position = "absolute";
+        draggedItem.style.zIndex = 1000;
+
+        function onTouchMove(event) {
+            let touchLocation = event.touches[0];
+            draggedItem.style.left = touchLocation.pageX - draggedItem.offsetWidth / 2 + "px";
+            draggedItem.style.top = touchLocation.pageY - draggedItem.offsetHeight / 2 + "px";
+        }
+
+        function onTouchEnd(event) {
+            document.removeEventListener("touchmove", onTouchMove);
+            document.removeEventListener("touchend", onTouchEnd);
+
+            let dropTargets = document.querySelectorAll(".drop-box");
+            let itemRect = draggedItem.getBoundingClientRect();
+            let matched = false;
+
+            dropTargets.forEach(drop => {
+                let dropRect = drop.getBoundingClientRect();
+
+                if (
+                    itemRect.left < dropRect.right &&
+                    itemRect.right > dropRect.left &&
+                    itemRect.top < dropRect.bottom &&
+                    itemRect.bottom > dropRect.top
+                ) {
+                    let correctMatch = draggedItem.dataset.match.replace("img", "drop");
+                    if (drop.id === correctMatch) {
+                        drop.innerText = draggedItem.innerText;
+                        drop.style.backgroundColor = "lightgreen";
+                        draggedItem.style.display = "none";
+                        matched = true;
+                    }
+                }
+            });
+
+           
+
+            draggedItem.style.position = "static";
+            checkCompletion();
+        }
+
+        document.addEventListener("touchmove", onTouchMove);
+        document.addEventListener("touchend", onTouchEnd);
+    });
+});
+
+document.querySelectorAll(".drop-box").forEach(box => {
+    box.addEventListener("dragover", (e) => e.preventDefault());
+
+    box.addEventListener("drop", (e) => {
+        e.preventDefault();
+        let itemId = e.dataTransfer.getData("text");
+        let draggedItem = document.getElementById(itemId);
+        let correctMatch = draggedItem.dataset.match.replace("img", "drop");
+
+        if (e.target.id === correctMatch) {
+            e.target.innerText = draggedItem.innerText;
+            e.target.style.backgroundColor = "lightgreen";
+            draggedItem.style.display = "none";
+            checkCompletion();
+        } 
+        // Clear the error message if all correct answers are placed
+        checkCompletion();
+
+    });
+});
+
+function checkCompletion() {
+    let allPlaced = true;
+    document.querySelectorAll(".drop-box").forEach(box => {
+        if (box.innerText === "Place the correct text") {
+            allPlaced = false;
+        }
+    });
+
+    if (allPlaced) {
+        document.getElementById("gameContainer").classList.add("hidden");
+        document.getElementById("result").innerHTML = `
+            <div class="success-message">
+                🎉 Congratulations! 🎉 <br> 
+                You successfully completed cultural level Level 3!
+                <br><br>
+                <img src="https://media.giphy.com/media/26AHONQ79FdWZhAI0/giphy.gif" width="200">
+                <br>
+                <button onclick="window.location.href='foodlevel1.html'" 
+                        style="font-size: 20px; padding: 10px 20px; background: #ed8004; 
+                               color: white; border: none; border-radius: 5px; 
+                               cursor: pointer; margin-top: 20px;">
+                    Go to Food Level →
+                </button>
+            </div>
+        `;
+    }
+}
+
+
+    </script>
+</body>
+</html>

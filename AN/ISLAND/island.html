@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Information Page</title>
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 10px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 100%;
+            margin: auto;
+            background: white;
+            padding: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        h2 {
+            color: #333;
+            font-size: 1.3em;
+            margin-top: 10px;
+        }
+        .translate-container {
+            margin-bottom: 8px;
+        }
+        .info-text {
+            font-size: 14px;
+            text-align: justify;
+            padding: 8px;
+            background: #eef;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .images-container img {
+            width: 100%;
+            max-width: 150px;
+            margin: 10px;
+            border-radius: 5px;
+        }
+        .youtube-video {
+            margin: 15px 0;
+            padding-bottom: 15px;
+        }
+        .btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-size: 1em;
+        }
+        .start-game-btn-container {
+            margin-top: 15px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .start-game-btn {
+            background-color: #28a745;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .start-game-btn:hover {
+            background-color: #218838;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        /* Media Query for small screens */
+        @media only screen and (max-width: 430px) {
+            .container {
+                padding: 8px;
+            }
+            h2 {
+                font-size: 1.2em;
+            }
+            .info-text {
+                font-size: 13px;
+            }
+            .btn {
+                width: 100%;
+                font-size: 0.9em;
+            }
+            .images-container img {
+                max-width: 100%;
+            }
+            iframe {
+                width: 100%;
+                height: auto;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+
+    <div class="container">
+        <h2>Once Read The Page To Play Games</h2>
+
+        <!-- Information Text -->
+        <p class="info-text" id="infoText">
+            The Solar System is a collection of planets, moons, asteroids, and comets orbiting the Sun. It includes planets like Mercury, Venus, Earth, and Mars. The Sun's gravitational force holds everything in place, creating a cosmic dance of celestial bodies.
+        </p>
+
+        <!-- Button to Start Game -->
+        <div class="start-game-btn-container">
+            <button class="btn start-game-btn" onclick="startGame()">Click Here to Start The Game 👆</button>
+        </div>
+
+        <!-- Language Translator -->
+        <div class="translate-container">
+            <div id="google_translate_element"></div>
+        </div>
+
+        <!-- Speaker Button -->
+        <button class="btn" onclick="speakText()">🔊 Listen</button>
+
+        <!-- YouTube Video -->
+        <div class="youtube-video">
+            <iframe width="560" height="230" src="https://www.youtube.com/embed/e_qOCsrRNSM?si=QU5laNVAKnJFydJR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+
+        <!-- Images -->
+        <div class="images-container">
+            <img src="https://www.hindustantimes.com/ht-img/img/2023/10/17/550x309/Collage_Maker-17-Oct-2023-07-48-PM-737_1697552286676_1697552299779.jpg" alt="Image 1">
+            <img src="https://www.andamanisland.in/assets/site1/theme3/images/limestone-caves-baratang-island/7.jpg" alt="Image 2">
+            <img src="https://tse2.mm.bing.net/th/id/OIP.FTJx876O89aN_mBAEaaRVgAAAA?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Image 3">
+            <img src="https://www.andamanisland.in/assets/site1/theme3/images/speed-boat-ride-in-the-mangroove-baratang-island/6.jpg" alt="Image 4">
+            <img src="https://tse3.mm.bing.net/th/id/OIP.XUqg_9PUhN9FmYVXj6Rg-QHaE8?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Image 5">
+        </div>
+    </div>
+
+    <script>
+        // Initialize Google Translate with ALL languages
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({ pageLanguage: 'en' }, 'google_translate_element');
+
+            // Restore language after page reload
+            let savedLang = localStorage.getItem('selectedLang');
+            if (savedLang) {
+                setTimeout(() => {
+                    let select = document.querySelector('.goog-te-combo');
+                    if (select) {
+                        select.value = savedLang;
+                        select.dispatchEvent(new Event('change'));
+                    }
+                }, 500);
+            }
+        }
+
+        // Store Selected Language in localStorage
+        document.addEventListener("change", function (event) {
+            if (event.target.classList.contains("goog-te-combo")) {
+                localStorage.setItem("selectedLang", event.target.value);
+            }
+        });
+
+        // Text-to-Speech Function (Reads in Translated Language)
+        function speakText() {
+            let text = document.getElementById("infoText").innerText;
+            let utterance = new SpeechSynthesisUtterance(text);
+            
+            // Get current translated language
+            let selectedLang = localStorage.getItem("selectedLang") || "en";
+
+            // Speak in the selected language
+            utterance.lang = selectedLang;
+            speechSynthesis.speak(utterance);
+        }
+
+        function startGame() {
+            window.location.href = "cullevel1.html";
+        }
+    </script>
+
+</body>
+</html>

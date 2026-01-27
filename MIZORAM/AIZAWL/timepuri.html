@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Recommended Travel Time</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            color: black;
+            margin-left: 0%;
+        }
+
+        .calendar-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+
+        .calendar {
+            border: 2px solid black;
+            padding: 10px;
+            width: 350px;
+            text-align: center;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: black;
+            font-weight: bold;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .calendar:nth-child(1) {
+            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlTvWSI0lmgrwHWGlMWzFDsI9bIoZGKqy0ZA&s');
+        }
+
+        .calendar:nth-child(2) {
+            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxBnJDWHcIY1JSJlB9LvkFokZ0OTQUPZLawg&s');
+        }
+
+        .month {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        .days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .day {
+            padding: 8px;
+            border-radius: 4px;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .highlight {
+            background-color: orange;
+            font-weight: bold;
+        }
+
+        .day-name {
+            font-weight: bold;
+            background: lightgray;
+            padding: 8px;
+        }
+
+        @media (max-width: 600px) {
+            .calendar-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1><b>Wlcome To Puri On</b></h1>
+    <div class="calendar-container" id="calendarContainer"></div>
+
+    <script>
+        const recommendedDates = [
+            { month: 1, day: 19 },
+            { month: 4, day: 31 }
+        ];
+
+        const currentDate = new Date();
+        const currentYear = currentDate.getFullYear();
+
+        function generateCalendar(month, day) {
+            let year = (new Date(currentYear, month, day) < currentDate) ? currentYear + 1 : currentYear;
+
+            const calendarDiv = document.createElement("div");
+            calendarDiv.classList.add("calendar");
+
+            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            calendarDiv.innerHTML = `<div class="month">${monthNames[month]} ${year}</div>`;
+
+            const daysDiv = document.createElement("div");
+            daysDiv.classList.add("days");
+
+            const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+            dayNames.forEach(day => {
+                const dayNameDiv = document.createElement("div");
+                dayNameDiv.classList.add("day", "day-name");
+                dayNameDiv.textContent = day;
+                daysDiv.appendChild(dayNameDiv);
+            });
+
+            const firstDay = new Date(year, month, 1).getDay();
+            const totalDays = new Date(year, month + 1, 0).getDate();
+
+            for (let i = 0; i < firstDay; i++) {
+                const emptyDiv = document.createElement("div");
+                emptyDiv.classList.add("day");
+                daysDiv.appendChild(emptyDiv);
+            }
+
+            for (let d = 1; d <= totalDays; d++) {
+                const dayDiv = document.createElement("div");
+                dayDiv.classList.add("day");
+                dayDiv.textContent = d;
+
+                if (d === day) {
+                    dayDiv.classList.add("highlight");
+                }
+
+                daysDiv.appendChild(dayDiv);
+            }
+
+            calendarDiv.appendChild(daysDiv);
+            document.getElementById("calendarContainer").appendChild(calendarDiv);
+        }
+
+        recommendedDates.forEach(date => generateCalendar(date.month, date.day));
+    </script>
+
+</body>
+</html>

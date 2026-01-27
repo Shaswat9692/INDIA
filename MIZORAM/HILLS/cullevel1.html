@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Level 1 - MCQ Quiz</title>
+    <style>
+ body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    color: white; /* Ensures text is white */
+    background-image: url('https://t3.ftcdn.net/jpg/02/97/67/70/360_F_297677001_zX7ZzRq8DObUV5IWTHAIhAae6DuiEQh4.jpg'); /* Replace with your image path */
+    background-size: cover; /* Makes the image cover the full page */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents repeating */
+    height: 100vh; /* Ensures full height */
+    margin: 0; /* Removes default margins */
+}
+
+
+h1 {
+    color: rgb(245, 3, 15); /* Ensures the quiz title is white */
+}
+
+.question-container h2 {
+    color: rgb(255, 255, 255); /* Text color */
+    background-color: rgba(0, 0, 0, 0.6); /* Background color (black with transparency) */
+    padding: 10px; /* Adds space around text */
+    border-radius: 10px; /* Rounds corners */
+    display: inline-block; /* Ensures the background fits the text width */
+}
+
+
+
+        .question-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.options {
+    display: grid;
+    grid-template-columns: repeat(2, auto); /* Keeps two items per row */
+    gap: 10px; /* Reduces the space between images */
+    justify-content: center; /* Keeps them centered */
+    align-items: center;
+}
+
+
+.options button {
+    width: 200px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #00ffd5;
+    border: none; /* Removed border to avoid extra markings */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.options img {
+    width: 160px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 10px;
+   margin-right: -12%;
+}
+
+
+
+        .message {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        .correct { color: green; }
+        .wrong { color: red; }
+        .hidden { display: none; }
+        .question-image {
+            width: 400px;
+            height: 300px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Level 1: MCQ Quiz</h1>
+    <div id="quiz-container"></div>
+    <p id="message" class="message"></p>
+
+    <script>
+                  const questions = [
+    {
+        question: "See Which is Ratha Yatra",
+        options: [
+            "a) https://odishatourism.gov.in/content/dam/tourism/home/discover/about-odisha/glimpses-of-odisha/glimsodisha-banner.jpg",
+            "b) https://www.holidify.com/images/cmsuploads/compressed/HYF08DANCE1_1106382f_20170826150024.jpg",
+            "c) https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs-36IRepOU1v7szdmj9K-NKXHU66ZL4Q8IQ&s",
+            "d) https://www.ritiriwaz.com/wp-content/uploads/2018/06/Puri.jpg"
+        ],
+        answer: "d) https://www.ritiriwaz.com/wp-content/uploads/2018/06/Puri.jpg"
+    },
+    {
+        question: "Guess which culture is this ?",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQa15PN6OugiYSg3vNVGuooI2tX0u8ccU_CoVkzZSTwIFdgX7Ou8U8tu5zSUpBnvK67wko&usqp=CAU",
+        options: [
+            "a) Konark",
+            "b) Baluka",
+            "c) Nacha",
+            "d) Chitra"
+        ],
+        answer: "b) Baluka"
+    },
+    {
+        question: "Which is Konark chakra",
+        options: [
+            "a) https://www.holidify.com/images/cmsuploads/compressed/8470388719_d710f2bc71_b_20170826124931.jpg",
+            "b) https://thumbs.dreamstime.com/b/classical-indian-dancer-posture-dance-culture-odisha-beautiful-odissi-223046852.jpg",
+            "c) https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPVdqzULWq4lZMjJCVxqowjhKosvtXEeJAtQ&s",
+            "d) https://static.toiimg.com/photo/63233168.cms"
+        ],
+        answer: "a) https://www.holidify.com/images/cmsuploads/compressed/8470388719_d710f2bc71_b_20170826124931.jpg"
+    },
+    {
+        question: "Do you know this ?",
+        image: "https://studyinsta.com/wp-content/uploads/2024/06/Raja-Festival-The-Most-Popular-Fiesta-of-Odisha.webp",
+        options: [
+            "a) Makara",
+            "b) Pana Sankranti",
+            "c) Raja",
+            "d) Kumar Purnima"
+        ],
+        answer: "c) Raja"
+    },
+    {
+        question: "Can you say which one is Kartika purnima ?",
+        options: [
+            "a) https://studyinsta.com/wp-content/uploads/2024/06/Diwali-The-Festival-of-Lights-768x372.webp",
+            "b) https://studyinsta.com/wp-content/uploads/2022/08/Bada-Osha-%E2%80%93-Major-Fasting-Festival-768x372.webp",
+            "c) https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvc8Un8cDO7LIBN2LIcOzdNcmY9aUgWhO_J3z9pWUz8IDMgoPsCfuo9xnqhcKKWFDIWC8&usqp=CAU",
+            "d) https://culinaryxpress.com/wp-content/uploads/2014/11/bali-yatra-remembering-odishas-glorious-maritime-glory.1024x1024-4.jpg"
+        ],
+        answer: "d) https://culinaryxpress.com/wp-content/uploads/2014/11/bali-yatra-remembering-odishas-glorious-maritime-glory.1024x1024-4.jpg"
+    }
+];
+
+        let currentQuestion = 0;
+
+        function loadQuestion() {
+            if (currentQuestion >= questions.length) {
+                document.body.innerHTML = `
+                    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
+                        <h1 style="font-size: 36px; font-weight: bold; color: #ff6600; text-shadow: 2px 2px 8px rgba(0,0,0,0.2);">
+                            🎉 Congratulations! 🎉 <br> You successfully completed Level 1!
+                        </h1>
+                        <img src="https://media.giphy.com/media/26AHONQ79FdWZhAI0/giphy.gif" width="200px">
+                        <br>
+                        <button onclick="goToLevel2()" style="background-color: #ff6600; color: white; font-size: 20px; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 2px 2px 5px rgba(0,0,0,0.3);">
+                            🚀 Go to Level 2 →
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            const q = questions[currentQuestion];
+            let html = `<div class='question-container'><h2>${q.question}</h2>`;
+            
+            // Display question image if available
+            if (q.image) {
+                html += `<img src="${q.image}" class='question-image'>`;
+            }
+            
+            html += "<div class='options'>";
+            q.options.forEach(opt => {
+                const isImage = opt.includes("http");
+                if (isImage) {
+                    html += `<button onclick='checkAnswer("${opt}")' style='background:none;'><img src="${opt.split(" ")[1]}"></button>`;
+                } else {
+                    html += `<button onclick='checkAnswer("${opt}")'>${opt}</button>`;
+                }
+            });
+            html += "</div></div><br>";
+            document.getElementById("quiz-container").innerHTML = html;
+        }
+
+        function checkAnswer(selectedOption) {
+            const correctAnswer = questions[currentQuestion].answer;
+            if (selectedOption === correctAnswer) {
+                document.getElementById("message").innerHTML = "✅ Correct!";
+                document.getElementById("message").className = "message correct";
+                setTimeout(() => {
+                    currentQuestion++;
+                    loadQuestion();
+                }, 1000);
+            } else {
+                document.getElementById("message").innerHTML = "❌ Wrong! Try again.";
+                document.getElementById("message").className = "message wrong";
+            }
+        }
+
+        function goToLevel2() {
+            window.location.href = "cullevel2.html";
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dadra and Nagar Haveli</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+        }
+        .video-container {
+            margin-top: 20px;
+        }
+        .places-list {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .places-list h2 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+        select {
+            font-size: 18px;
+            padding: 10px;
+            width: 250px;
+            border-radius: 5px;
+            border: 2px solid #333;
+            background-color: white;
+            cursor: pointer;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Dadra and Nagar Haveli</h1>
+    <div class="video-container">
+        <div style="position: relative; width: 100%; padding-top: 56.25%;">
+            <iframe 
+                src="https://www.youtube.com/embed/pSrmZkBClE4?si=Bym8jgnkZ98ebgIm"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+            </iframe>
+        </div>
+    </div>
+    
+    <div class="places-list">
+        <h2>Famous Places in Dadra and Nagar Haveli &#9660;</h2>
+        <select id="places-dropdown" onchange="openPlacePage()">
+            <option disabled selected>Select a place</option>
+            <option value="SILVASSA/silvassa.html">Silvassa</option>
+            <option value="LAKE/lake.html">Vanganga Lake Garden</option>
+            <option value="MUSEUM/museum.html">Tribal Cultural Museum</option>
+            <option value="DUDHNI/dudhni.html">Dudhni Lake</option>
+            <option value="DEER/deer.html">Satmaliya Deer Park</option>
+            <option value="DAM/dam.html">Dudhani Dam</option>
+            <option value="TEMPLE/temple.html">Bindrabin Temple</option>
+            <option value="VAN/van.html">Hirwa Van Garden</option>
+            <option value="LION/lion.html">Vasona Lion Safari</option>
+            <option value="GARDEN/garden.html">Nakshatra Garden</option>
+        </select>
+    </div>
+
+    <script>
+        function openPlacePage() {
+            var select = document.getElementById("places-dropdown");
+            var selectedValue = select.value;
+            if (selectedValue) {
+                window.location.href = selectedValue;
+            }
+        }
+    </script>
+</body>
+</html>
